@@ -2,6 +2,7 @@ import argparse
 from contextlib import contextmanager
 import re
 import sys
+import time
 
 from bs4 import BeautifulSoup
 import requests
@@ -66,7 +67,7 @@ def scrape_once(url, next_text, output_format, file_handle):
     next_link = get_next(html_body, next_text)
     return next_link
 
-def scrape(first_url, next_text, max_pages, output_format, output_filename):
+def scrape(first_url, next_text, max_pages, output_format, output_filename, sleep_secs):
     url = first_url
     with html_context(output_format, output_filename) as file_handle:
         for idx in range(0, max_pages):
@@ -74,6 +75,7 @@ def scrape(first_url, next_text, max_pages, output_format, output_filename):
             if not url:
                 print(f"Next link not found")
                 break
+            time.sleep(sleep_secs)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -82,8 +84,9 @@ def main():
     parser.add_argument('-m', '--max', type=int, default="1000", help='the max number of pages to scrape')
     parser.add_argument('-f', '--format', default="plaintext", choices=["plaintext", "html"], help='output format')
     parser.add_argument('-o', '--output', default="story.txt", help='the output file')
+    parser.add_argument('-s', '--sleep', type=int, default="1", help='how many seconds to sleep between each request')
     args = parser.parse_args()
-    return scrape(args.url, args.next, args.max, args.format, args.output)
+    return scrape(args.url, args.next, args.max, args.format, args.output, args.sleep)
 
 if __name__ == "__main__":
     sys.exit(main())
