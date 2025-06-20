@@ -1,12 +1,12 @@
 Download multi-post stories from Reddit (such as those found on HFY) into one document.
 
-= Installation = 
+# Installation
 
 You will need to install the python modules in requirements.txt
 
 python -m pip install -r requirements.txt
 
-= Usage=
+# Usage
 usage: scrape.py [-h] [-u URL] [-n NEXT] [-m MAX] [-f {plaintext,html}] [-o OUTPUT] [-s SLEEP]
 
 options:
@@ -21,6 +21,6 @@ options:
   -s SLEEP, --sleep SLEEP
                         how many seconds to sleep between each request
 
-= Example usage =
+# Example usage
 
 python scrape.py --url https://www.reddit.com/r/HFY/comments/u19xpa/the_nature_of_predators/ --next Next --max 200 --format plaintext --output The_Nature_Of_Predators.txt --sleep 1
